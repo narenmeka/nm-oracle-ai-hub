@@ -4,9 +4,9 @@ A browser-based AI assistant hub with 8 models across 4 providers (Anthropic, Go
 
 ## Live App
 
-**[Launch NM Oracle AI Hub →](https://YOUR-USERNAME.github.io/nm-oracle-ai-hub/)**
+**[Launch NM Oracle AI Hub →](https://narenmeka.github.io/nm-oracle-ai-hub/)**
 
-> ⚠ After enabling GitHub Pages in repo Settings, replace the link above with your actual live URL. It will look like `https://your-github-username.github.io/your-repo-name/`
+> ⚠ After enabling GitHub Pages in repo Settings, replace the link above with your actual live URL. It will look like `https://narenmeka.github.io/nm-oracle-ai-hub/`
 
 ---
 
