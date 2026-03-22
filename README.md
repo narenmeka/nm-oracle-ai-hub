@@ -1,6 +1,6 @@
 # NM Oracle AI Hub
 
-A browser-based AI assistant hub with 8 models across 4 providers (Anthropic, Google, DeepSeek, Groq). Single HTML file — no install, no backend, no server required.
+A browser-based AI assistant hub with 8 models across 4 providers (Anthropic, Google, DeepSeek, Groq). Single HTML file — no install, no backend, no server required. Just provide the the API keys in setting tab and select the modle and good to go
 
 ## Live App
 
