@@ -1,12 +1,17 @@
 # NM Oracle AI Hub
 
-A browser-based AI assistant hub with 8 models across 4 providers (Anthropic, Google, DeepSeek, Groq). Single HTML file — no install, no backend, no server required. Just provide the the API keys in setting tab and select the modle and good to go
+> © 2026 Narendra Meka. All Rights Reserved.
+> This software and its source code are the exclusive intellectual property of Narendra Meka.
+> Unauthorised copying, modification, distribution, or use — in whole or in part — without
+> the express written permission of the author is strictly prohibited.
+
+A browser-based AI assistant hub with 8 models across 4 providers (Anthropic, Google, DeepSeek, Groq). Single HTML file — no install, no backend, no server required.
 
 ## Live App
 
-**[Launch NM Oracle AI Hub →](https://narenmeka.github.io/nm-oracle-ai-hub/)**
+**[Launch NM Oracle AI Hub →](https://YOUR-USERNAME.github.io/nm-oracle-ai-hub/)**
 
-> ⚠ After enabling GitHub Pages in repo Settings, replace the link above with your actual live URL. It will look like `https://narenmeka.github.io/nm-oracle-ai-hub/`
+> ⚠ After enabling GitHub Pages in repo Settings, replace the link above with your actual live URL. It will look like `https://your-github-username.github.io/your-repo-name/`
 
 ---
 
