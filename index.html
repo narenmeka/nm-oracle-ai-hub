@@ -2945,6 +2945,7 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
             onkeydown="if(event.key==='Enter')startAcademy()" />
           <button class="academy-mic" id="academyMicBtn" onclick="academyVoice()" title="Speak your concept">🎤</button>
           <button class="academy-go-btn" id="academyGoBtn" onclick="startAcademy()">Explain →</button>
+          <button class="academy-go-btn" onclick="nmClearAcademy()" title="Clear results and start fresh" style="background:transparent;border:1px solid rgba(232,75,55,0.4);color:#f87171;min-width:unset;padding:0 14px;">🗑️ Clear</button>
         </div>
 
         <!-- Quick-pick chips by category -->
@@ -3134,6 +3135,7 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
 
             <div class="bs-generate-row">
               <button class="bs-gen-btn" id="bsGenBtn" onclick="runBuildStudio()">🔨 Build It</button>
+              <button class="bs-gen-btn" onclick="nmClearBuildStudio()" title="Clear all and start fresh" style="background:transparent;border:1px solid rgba(232,75,55,0.4);color:#f87171;box-shadow:none;">🗑️ Clear</button>
               <span class="bs-gen-hint" id="bsGenHint">AI will generate main code + registration steps + test queries + notes</span>
             </div>
           </div>
@@ -3382,6 +3384,7 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
 
         <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
           <button class="va-analyse-btn" id="vaAnalyseBtn" onclick="runVisualAnalyser()" disabled>🔍 Analyse Screenshot</button>
+          <button class="va-analyse-btn" onclick="nmClearVaResult()" title="Clear result and start fresh" style="background:transparent;border:1px solid rgba(232,75,55,0.4);color:#f87171;opacity:1;">🗑️ Clear</button>
           <span style="font-size:12px;color:var(--text3);" id="vaFileLabel">No image loaded</span>
         </div>
 
@@ -3392,6 +3395,7 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
             <div class="va-result-actions">
               <button class="va-result-act-btn" onclick="vaSendToChat()">💬 Ask More</button>
               <button class="va-result-act-btn" onclick="vaCopyResult()">📋 Copy</button>
+              <button class="va-result-act-btn" onclick="nmClearVaResult()" title="Clear result and start a new analysis" style="border-color:rgba(232,75,55,0.35);color:#f87171;">🗑️ Clear</button>
             </div>
           </div>
           <div id="vaResultBody">
@@ -3482,6 +3486,7 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
         <!-- Summarise button -->
         <div id="vaDocBtnRow" style="display:none;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px;">
           <button class="va-analyse-btn" id="vaDocAnalyseBtn" onclick="vaRunDocAnalysis()" disabled>📋 Analyse Document</button>
+          <button class="va-analyse-btn" onclick="nmClearVaDocResult()" title="Clear result and start fresh" style="background:transparent;border:1px solid rgba(232,75,55,0.4);color:#f87171;opacity:1;">🗑️ Clear</button>
           <span style="font-size:12px;color:var(--text3);" id="vaDocFileLabel"></span>
         </div>
 
@@ -3492,6 +3497,7 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
             <span class="va-result-title" id="vaDocResultTitle">Summarising…</span>
             <div class="va-result-actions">
               <button class="va-result-act-btn" onclick="vaDocCopyResult()">📋 Copy</button>
+              <button class="va-result-act-btn" onclick="nmClearVaDocResult()" title="Clear result and start a new analysis" style="border-color:rgba(232,75,55,0.35);color:#f87171;">🗑️ Clear</button>
             </div>
           </div>
           <div id="vaDocResultBody" style="padding:16px;"></div>
@@ -4143,6 +4149,125 @@ const _0x3c3bd0=_0x89a4;(function(_0x43ad50,_0x392890){const _0x43ee39=_0x89a4,_
 function openAboutModal(){document.getElementById('aboutModal').style.display='flex';}
 function closeAboutModal(){document.getElementById('aboutModal').style.display='none';}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAboutModal();});
+</script>
+
+<!-- Tab clear functions -->
+<script>
+/* EBS Academy */
+function nmClearAcademy(){
+  var input=document.getElementById('academyInput');
+  var body=document.getElementById('academyBody');
+  var empty=document.getElementById('academyEmpty');
+  if(input) input.value='';
+  if(body){
+    body.innerHTML='';
+    if(empty){body.appendChild(empty);empty.style.display='';}
+    else{body.innerHTML='<div class="academy-empty" id="academyEmpty"><div class="academy-empty-icon">🎓</div><div class="academy-empty-text">Type any Oracle EBS R12 concept above or pick a topic chip to get started.<br><br>You will get a <strong>Quick Brief</strong> first, then choose how deep you want to go.</div></div>';}
+  }
+}
+/* Build Studio */
+function nmClearBuildStudio(){
+  var input=document.getElementById('bsNlInput');
+  var obj=document.getElementById('bsObjectName');
+  var tbl=document.getElementById('bsKeyTables');
+  if(input) input.value='';
+  if(obj) obj.value='';
+  if(tbl) tbl.value='';
+  if(typeof bsReset==='function') bsReset();
+}
+</script>
+
+<!-- Analyser clear buttons -->
+<script>
+function nmClearVaResult(){
+  var r=document.getElementById('vaResult');
+  var body=document.getElementById('vaResultBody');
+  if(r) r.classList.remove('visible');
+  if(body) body.innerHTML='<div class="va-loading" id="vaLoading" style="display:none;"></div>';
+  /* Also clear the image so user can drop a fresh one */
+  if(typeof vaClearImage==='function') vaClearImage();
+}
+function nmClearVaDocResult(){
+  var r=document.getElementById('vaDocResult');
+  var body=document.getElementById('vaDocResultBody');
+  var qa=document.getElementById('vaDocQA');
+  if(r) r.classList.remove('visible');
+  if(body) body.innerHTML='';
+  if(qa) qa.style.display='none';
+}
+</script>
+
+<!-- Advisor result visibility patch v2 -->
+<style>
+#advResult.visible,#advResult[data-nm-show]{display:block!important;}
+#advCompare.visible,#advCompare[data-nm-show]{display:block!important;}
+</style>
+<script>
+(function(){
+  var _poll=null;
+
+  function showResult(){
+    var r=document.getElementById('advResult');
+    var c=document.getElementById('advCompare');
+    var hw=document.getElementById('advHistoryWrap');
+    if(r){
+      r.classList.add('visible');
+      r.setAttribute('data-nm-show','1');
+      r.style.removeProperty('display');
+      setTimeout(function(){
+        var wrap=document.querySelector('.adv-wrap');
+        if(wrap) wrap.scrollTop=0;
+      },60);
+    }
+    if(c){
+      var cy=document.getElementById('advCompareYours');
+      var co=document.getElementById('advCompareOracle');
+      if((cy&&cy.textContent.trim())||(co&&co.textContent.trim())){
+        c.classList.add('visible');
+        c.setAttribute('data-nm-show','1');
+        c.style.removeProperty('display');
+      }
+    }
+    if(hw) hw.style.removeProperty('display');
+  }
+
+  function startPoll(){
+    if(_poll) clearInterval(_poll);
+    var ticks=0;
+    var base=document.getElementById('advHistoryList')
+      ? document.getElementById('advHistoryList').children.length : 0;
+    _poll=setInterval(function(){
+      if(++ticks>150){clearInterval(_poll);_poll=null;return;}
+      var hl=document.getElementById('advHistoryList');
+      if(!hl) return;
+      if(hl.children.length>base){
+        showResult();
+        clearInterval(_poll);_poll=null;
+      }
+    },100);
+  }
+
+  function init(){
+    var btn=document.getElementById('advRunBtn');
+    if(!btn){setTimeout(init,600);return;}
+    btn.addEventListener('click',function(){setTimeout(startPoll,200);});
+    var hl=document.getElementById('advHistoryList');
+    if(hl){
+      new MutationObserver(function(m){
+        for(var i=0;i<m.length;i++){if(m[i].addedNodes.length>0){showResult();break;}}
+      }).observe(hl,{childList:true});
+    }
+    var sec=document.getElementById('advSections');
+    if(sec){
+      new MutationObserver(function(){
+        if(sec.children.length>1) showResult();
+      }).observe(sec,{childList:true});
+    }
+  }
+
+  if(document.readyState==='complete'||document.readyState==='interactive'){setTimeout(init,900);}
+  else{document.addEventListener('DOMContentLoaded',function(){setTimeout(init,900);});}
+})();
 </script>
 
 </body>
