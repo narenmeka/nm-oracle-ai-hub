@@ -382,17 +382,45 @@ label.ver-btn-epm.active::before{content:'✓ ';font-size:11px;}
 .si-copy{background:var(--surface3);border:1px solid var(--border);}
 
 /* ── MAIN NAV TABS ── */
+/* ── NAV TABS — dynamic glowing pills ── */
 .nav-tabs{
-  height:var(--nav-h);background:var(--surface);border-bottom:1px solid var(--border);
-  display:flex;align-items:stretch;padding:0 16px;gap:4px;flex-shrink:0;
+  height:var(--nav-h);
+  background:linear-gradient(180deg,#16192e 0%,#111320 100%);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  display:flex;align-items:center;padding:0 12px;gap:3px;flex-shrink:0;
+  position:relative;
+}
+.nav-tabs::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(99,102,241,0.4),rgba(236,72,153,0.3),rgba(16,185,129,0.3),transparent);
 }
 .nav-tab{
-  padding:0 18px;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;
-  border-bottom:2px solid transparent;display:flex;align-items:center;gap:6px;
-  transition:all 0.15s;white-space:nowrap;
+  padding:5px 14px;font-size:12.5px;font-weight:600;
+  color:rgba(255,255,255,0.38);cursor:pointer;
+  border-bottom:none;border-radius:22px;
+  display:flex;align-items:center;gap:6px;
+  transition:all 0.22s cubic-bezier(0.4,0,0.2,1);
+  white-space:nowrap;position:relative;letter-spacing:0.01em;
+  border:1px solid transparent;
 }
-.nav-tab:hover{color:var(--text);}
-.nav-tab.active{color:#fff;border-bottom-color:var(--accent);}
+.nav-tab[data-tab="chat"]:not(.active):hover{background:rgba(99,102,241,0.12);color:#a5b4fc;border-color:rgba(99,102,241,0.25);}
+.nav-tab[data-tab="academy"]:not(.active):hover{background:rgba(168,85,247,0.12);color:#d8b4fe;border-color:rgba(168,85,247,0.25);}
+.nav-tab[data-tab="buildstudio"]:not(.active):hover{background:rgba(249,115,22,0.12);color:#fdba74;border-color:rgba(249,115,22,0.25);}
+.nav-tab[data-tab="advisor"]:not(.active):hover{background:rgba(16,185,129,0.12);color:#6ee7b7;border-color:rgba(16,185,129,0.25);}
+.nav-tab[data-tab="va"]:not(.active):hover{background:rgba(6,182,212,0.12);color:#67e8f9;border-color:rgba(6,182,212,0.25);}
+.nav-tab[data-tab="codelab"]:not(.active):hover{background:rgba(236,72,153,0.12);color:#f9a8d4;border-color:rgba(236,72,153,0.25);}
+.nav-tab[data-tab="usage"]:not(.active):hover{background:rgba(245,158,11,0.12);color:#fde68a;border-color:rgba(245,158,11,0.25);}
+.nav-tab[data-tab="settings"]:not(.active):hover{background:rgba(148,163,184,0.1);color:#cbd5e1;border-color:rgba(148,163,184,0.2);}
+@keyframes tabPulse{0%,100%{opacity:1;}50%{opacity:0.88;}}
+.nav-tab.active{color:#fff;border-color:transparent;animation:tabPulse 3.5s ease-in-out infinite;}
+.nav-tab[data-tab="chat"].active{background:linear-gradient(135deg,#4f46e5,#6366f1);box-shadow:0 0 18px rgba(99,102,241,0.55),0 2px 8px rgba(0,0,0,0.35);}
+.nav-tab[data-tab="academy"].active{background:linear-gradient(135deg,#7c3aed,#9333ea);box-shadow:0 0 18px rgba(147,51,234,0.55),0 2px 8px rgba(0,0,0,0.35);}
+.nav-tab[data-tab="buildstudio"].active{background:linear-gradient(135deg,#c2410c,#ea580c);box-shadow:0 0 18px rgba(234,88,12,0.55),0 2px 8px rgba(0,0,0,0.35);}
+.nav-tab[data-tab="advisor"].active{background:linear-gradient(135deg,#047857,#059669);box-shadow:0 0 18px rgba(5,150,105,0.55),0 2px 8px rgba(0,0,0,0.35);}
+.nav-tab[data-tab="va"].active{background:linear-gradient(135deg,#0e7490,#0891b2);box-shadow:0 0 18px rgba(8,145,178,0.55),0 2px 8px rgba(0,0,0,0.35);}
+.nav-tab[data-tab="codelab"].active{background:linear-gradient(135deg,#be185d,#db2777);box-shadow:0 0 18px rgba(219,39,119,0.55),0 2px 8px rgba(0,0,0,0.35);}
+.nav-tab[data-tab="usage"].active{background:linear-gradient(135deg,#b45309,#d97706);box-shadow:0 0 18px rgba(217,119,6,0.55),0 2px 8px rgba(0,0,0,0.35);}
+.nav-tab[data-tab="settings"].active{background:linear-gradient(135deg,#334155,#475569);box-shadow:0 0 14px rgba(71,85,105,0.45),0 2px 8px rgba(0,0,0,0.35);}
 
 /* ── TAB CONTENT ── (defined above in layout section) ── */
 
@@ -509,10 +537,10 @@ label.ver-btn-epm.active::before{content:'✓ ';font-size:11px;}
 .ws-setup-btn{width:100%;margin-top:12px;padding:10px 16px;background:linear-gradient(135deg,#1f6feb 0%,#7c3aed 100%);border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;letter-spacing:0.3px;transition:opacity 0.15s;}
 .ws-setup-btn:hover{opacity:0.88;}
 
-.msg{display:flex;gap:10px;max-width:860px;width:100%;}
-.msg.msg-user{flex-direction:row-reverse;margin-left:auto;}
+.msg{display:flex;gap:10px;width:100%;}
+.msg.msg-user{flex-direction:row-reverse;margin-left:auto;max-width:75%;}
 .msg.msg-user .bubble{background:var(--user-bg);border-top-right-radius:3px;}
-.msg.msg-assistant .bubble{background:var(--ai-bg);border:1px solid var(--border);border-top-left-radius:3px;}
+.msg.msg-assistant .bubble{background:var(--ai-bg);border:1px solid var(--border);border-top-left-radius:3px;width:100%;}
 .msg.msg-error .err-bub{
   background:rgba(192,57,43,0.15);border:1px solid rgba(192,57,43,0.4);
   border-radius:8px;padding:10px 14px;color:#f88;font-size:13px;width:100%;
@@ -525,7 +553,7 @@ label.ver-btn-epm.active::before{content:'✓ ';font-size:11px;}
 .av-user{background:var(--accent);color:#fff;}
 .av-ai{background:var(--accent2);color:#90b4d4;font-size:10px;}
 
-.msg-inner{display:flex;flex-direction:column;gap:4px;min-width:0;}
+.msg-inner{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1;}
 .msg-meta{display:flex;align-items:center;gap:8px;margin-bottom:2px;}
 .msg-name{font-size:11.5px;font-weight:700;color:var(--text2);}
 .msg-time{font-size:10.5px;color:var(--text3);}
@@ -554,6 +582,39 @@ label.ver-btn-epm.active::before{content:'✓ ';font-size:11px;}
 .bubble{padding:11px 14px;border-radius:10px;font-size:13.5px;line-height:1.75;word-break:break-word;}
 .bubble strong{font-weight:700;color:#c8d8f0;}
 .bubble br{display:block;content:'';margin:2px 0;}
+
+/* Expand button on AI messages */
+.msg-expand-btn{
+  display:none;position:absolute;top:8px;right:10px;
+  background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.35);
+  color:#a5b4fc;border-radius:6px;padding:3px 8px;font-size:11px;
+  cursor:pointer;transition:all .15s;z-index:2;
+}
+.msg-assistant:hover .msg-expand-btn{display:block;}
+.msg-expand-btn:hover{background:rgba(99,102,241,0.35);color:#fff;}
+.msg-assistant .msg-inner{position:relative;}
+
+/* Full-screen response reader */
+.nm-reader-overlay{
+  position:fixed;inset:0;background:rgba(5,8,15,0.92);backdrop-filter:blur(10px);
+  z-index:9999;display:none;align-items:flex-start;justify-content:center;
+  padding:32px 20px;overflow-y:auto;
+}
+.nm-reader-overlay.open{display:flex;}
+.nm-reader-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  width:100%;max-width:1100px;padding:32px 40px;position:relative;
+  box-shadow:0 24px 80px rgba(0,0,0,0.6);animation:ftm-slide-up .25s cubic-bezier(.16,1,.3,1);
+}
+.nm-reader-close{
+  position:sticky;top:0;float:right;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text2);border-radius:8px;padding:6px 14px;font-size:13px;cursor:pointer;
+  transition:all .15s;margin-bottom:12px;
+}
+.nm-reader-close:hover{background:rgba(232,75,55,0.2);border-color:rgba(232,75,55,0.5);color:#f87171;}
+.nm-reader-body{font-size:15px;line-height:1.85;color:var(--text);clear:both;}
+.nm-reader-body strong{font-weight:700;color:#c8d8f0;}
+.nm-reader-body pre{background:#0d1117;border:1px solid var(--border);border-radius:8px;padding:16px;overflow-x:auto;font-size:13px;}
 .inline-code{
   background:#0d1117;border:1px solid var(--border);color:#79c0ff;
   font-family:'Courier New',monospace;font-size:12px;padding:1px 5px;border-radius:3px;
@@ -1170,6 +1231,49 @@ pre.code-pre code{color:#a8d8a8;}
   border-radius:5px;color:var(--text2);cursor:pointer;
 }
 .tool-copy-btn:hover{color:#fff;border-color:#fff;}
+.tool-clear-btn{
+  font-size:12px;padding:5px 10px;background:transparent;
+  border:1px solid rgba(239,68,68,0.35);border-radius:5px;
+  color:rgba(239,68,68,0.65);cursor:pointer;transition:all 0.15s;
+}
+.tool-clear-btn:hover{color:#ef4444;border-color:#ef4444;background:rgba(239,68,68,0.08);}
+.tool-expand-btn{
+  font-size:12px;padding:5px 10px;background:transparent;
+  border:1px solid rgba(99,102,241,0.35);border-radius:5px;
+  color:rgba(165,180,252,0.8);cursor:pointer;transition:all 0.15s;
+}
+.tool-expand-btn:hover{color:#a5b4fc;border-color:#a5b4fc;background:rgba(99,102,241,0.1);}
+.tool-expand-modal{
+  position:fixed;inset:0;z-index:9100;background:rgba(0,0,0,0.82);backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity 0.2s;
+}
+.tool-expand-modal.open{opacity:1;pointer-events:all;}
+.tool-expand-inner{
+  background:var(--surface);border:1px solid rgba(255,255,255,0.12);border-radius:18px;
+  width:min(88vw,960px);max-height:88vh;
+  display:flex;flex-direction:column;
+  box-shadow:0 32px 96px rgba(0,0,0,0.7);overflow:hidden;
+}
+.tool-expand-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 22px;border-bottom:1px solid var(--border);
+  background:var(--surface2);flex-shrink:0;
+}
+.tool-expand-title{font-size:14px;font-weight:700;color:#e2e8f0;letter-spacing:0.01em;}
+.tool-expand-actions{display:flex;gap:8px;align-items:center;}
+.tool-expand-body{
+  flex:1;overflow-y:auto;padding:28px 32px;
+  font-size:13.5px;line-height:1.9;color:var(--text);
+  white-space:pre-wrap;word-break:break-word;
+  font-family:'Courier New',Consolas,monospace;
+}
+.tool-expand-close{
+  background:none;border:1px solid var(--border);color:var(--text2);
+  font-size:16px;cursor:pointer;padding:4px 11px;border-radius:6px;line-height:1.4;
+  transition:all 0.15s;
+}
+.tool-expand-close:hover{color:#fff;border-color:#fff;background:rgba(255,255,255,0.06);}
 .tool-divider{border:none;border-top:1px solid var(--border);margin:4px 0;}
 /* NAV FINDER SPECIFIC */
 .nav-search-wrap{position:relative;}
@@ -1604,12 +1708,13 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
     <select class="model-sel" id="modelSel" onchange="changeModel(this.value)" title="Select AI Model">
       <optgroup label="🔴 Anthropic">
         <option value="claude-haiku-4-5-20251001">⚡ Haiku 4.5 — Fast ($0.80/$4)</option>
-        <option value="claude-sonnet-4-6" selected>⚖ Sonnet 4.5 — Recommended ($3/$15)</option>
+        <option value="claude-sonnet-4-6">⚖ Sonnet 4.5 — Recommended ($3/$15)</option>
         <option value="claude-opus-4-6">🧠 Opus 4.6 — Powerful ($5/$25)</option>
       </optgroup>
       <optgroup label="🟢 Google">
-        <option value="gemini-2.5-pro">✨ Gemini 2.5 Pro ($1.25/$10)</option>
-        <option value="gemini-2.0-flash">⚡ Gemini 2.0 Flash ($0.10/$0.40)</option>
+        <option value="gemini-2.5-flash" selected>⚡ Gemini 2.5 Flash — Default · Free ($0.30/$2.50)</option>
+        <option value="gemini-2.5-flash-lite">🆓 Gemini 2.5 Flash-Lite — 1000/day Free ($0.10/$0.40)</option>
+        <option value="gemini-2.5-pro">✨ Gemini 2.5 Pro — Paid only ($1.25/$10)</option>
       </optgroup>
       <optgroup label="🔵 DeepSeek">
         <option value="deepseek-chat">🔵 DeepSeek V3.2 ($0.27/$1.10)</option>
@@ -1690,13 +1795,14 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
 
   <!-- ── MAIN NAV ── -->
   <div class="nav-tabs">
-    <div class="nav-tab active" onclick="switchTab('chat',this)" data-tip="Ask any Oracle question and get expert AI answers">💬 Chat</div>
-    <div class="nav-tab" onclick="switchTab('academy',this)" data-tip="Learn any Oracle concept with AI-powered explanations and deep dives">🎓 EBS Academy</div>
-    <div class="nav-tab" onclick="switchTab('buildstudio',this)" data-tip="Generate full technical specs and code for Oracle customisations">🏗️ Build Studio</div>
-    <div class="nav-tab" onclick="switchTab('advisor',this)" data-tip="Validate your solution approach before you start building">🎯 Advisor</div>
-    <div class="nav-tab" onclick="switchTab('va',this)" data-tip="Analyse Oracle screenshots, documents, or web pages with AI">🔍 Analyser</div>
-    <div class="nav-tab" onclick="switchTab('usage',this)" data-tip="Track your API usage, token count, and estimated cost">📊 Usage & Cost</div>
-    <div class="nav-tab" onclick="switchTab('settings',this)" data-tip="Configure API key, AI model, and display preferences">⚙️ Settings</div>
+    <div class="nav-tab active" data-tab="chat" onclick="switchTab('chat',this)" data-tip="Ask any Oracle question and get expert AI answers">💬 Chat</div>
+    <div class="nav-tab" data-tab="academy" onclick="switchTab('academy',this)" data-tip="Learn any Oracle concept with AI-powered explanations and deep dives">🎓 EBS Academy</div>
+    <div class="nav-tab" data-tab="buildstudio" onclick="switchTab('buildstudio',this)" data-tip="Generate full technical specs and code for Oracle customisations">🏗️ Build Studio</div>
+    <div class="nav-tab" data-tab="advisor" onclick="switchTab('advisor',this)" data-tip="Validate your solution approach before you start building">🎯 Advisor</div>
+    <div class="nav-tab" data-tab="va" onclick="switchTab('va',this)" data-tip="Analyse Oracle screenshots, documents, or web pages with AI">🔍 Analyser</div>
+    <div class="nav-tab" data-tab="codelab" onclick="switchTab('codelab',this)" data-tip="Upload or paste PL/SQL — AI checks, fixes, and formats your code">🔬 Code Lab</div>
+    <div class="nav-tab" data-tab="usage" onclick="switchTab('usage',this)" data-tip="Track your API usage, token count, and estimated cost">📊 Usage & Cost</div>
+    <div class="nav-tab" data-tab="settings" onclick="switchTab('settings',this)" data-tip="Configure API key, AI model, and display preferences">⚙️ Settings</div>
   </div>
 
   <!-- ══════════════════════════════════════════════
@@ -2417,12 +2523,13 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
             <select class="form-select" id="defaultModelPref" onchange="savePrefs()">
               <optgroup label="🔴 Anthropic">
                 <option value="claude-haiku-4-5-20251001">⚡ Haiku 4.5 — Fast ($0.80/$4 per M)</option>
-                <option value="claude-sonnet-4-6" selected>⚖ Sonnet 4.5 — Recommended ($3/$15 per M)</option>
+                <option value="claude-sonnet-4-6">⚖ Sonnet 4.5 — Recommended ($3/$15 per M)</option>
                 <option value="claude-opus-4-6">🧠 Opus 4.6 — Powerful ($5/$25 per M)</option>
               </optgroup>
               <optgroup label="🟢 Google">
-                <option value="gemini-2.5-pro">✨ Gemini 2.5 Pro ($1.25/$10 per M)</option>
-                <option value="gemini-2.0-flash">⚡ Gemini 2.0 Flash ($0.10/$0.40 per M)</option>
+                <option value="gemini-2.5-flash" selected>⚡ Gemini 2.5 Flash — Default · Free ($0.30/$2.50 per M)</option>
+                <option value="gemini-2.5-flash-lite">🆓 Gemini 2.5 Flash-Lite — 1000/day Free ($0.10/$0.40 per M)</option>
+                <option value="gemini-2.5-pro">✨ Gemini 2.5 Pro — Paid only ($1.25/$10 per M)</option>
               </optgroup>
               <optgroup label="🔵 DeepSeek">
                 <option value="deepseek-chat">🔵 DeepSeek V3.2 ($0.27/$1.10 per M)</option>
@@ -2647,7 +2754,11 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
             <div>
               <div class="tool-output-header">
                 <span class="tool-output-label">📋 Impact Simulation Result</span>
-                <button class="tool-copy-btn" onclick="copyToolOutput('scenOutput')">📋 Copy</button>
+                <div style="display:flex;gap:6px;">
+                  <button class="tool-expand-btn" onclick="nmToolExpandOpen('scenOutput','🔮 Impact Simulation Result')">⛶ Expand</button>
+                  <button class="tool-copy-btn" onclick="copyToolOutput('scenOutput')">📋 Copy</button>
+                  <button class="tool-clear-btn" onclick="nmToolClear('scenOutput','Impact analysis will appear here after you click Simulate Impact.',['scenDesc'])">🗑 Clear</button>
+                </div>
               </div>
               <div class="tool-output empty" id="scenOutput">Impact analysis will appear here after you click Simulate Impact.</div>
             </div>
@@ -2694,7 +2805,11 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
             <div>
               <div class="tool-output-header">
                 <span class="tool-output-label">📋 Code Review Result</span>
-                <button class="tool-copy-btn" onclick="copyToolOutput('codeOutput')">📋 Copy</button>
+                <div style="display:flex;gap:6px;">
+                  <button class="tool-expand-btn" onclick="nmToolExpandOpen('codeOutput','🔍 Code Review Result')">⛶ Expand</button>
+                  <button class="tool-copy-btn" onclick="copyToolOutput('codeOutput')">📋 Copy</button>
+                  <button class="tool-clear-btn" onclick="nmToolClear('codeOutput','Review results will appear here.',['codeInput'])">🗑 Clear</button>
+                </div>
               </div>
               <div class="tool-output empty" id="codeOutput">Review results will appear here.</div>
             </div>
@@ -2766,7 +2881,11 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
             <div>
               <div class="tool-output-header">
                 <span class="tool-output-label">📋 Generated Test Data</span>
-                <button class="tool-copy-btn" onclick="copyToolOutput('tdOutput')">📋 Copy</button>
+                <div style="display:flex;gap:6px;">
+                  <button class="tool-expand-btn" onclick="nmToolExpandOpen('tdOutput','🧪 Generated Test Data')">⛶ Expand</button>
+                  <button class="tool-copy-btn" onclick="copyToolOutput('tdOutput')">📋 Copy</button>
+                  <button class="tool-clear-btn" onclick="nmToolClear('tdOutput','Generated test data will appear here.',['tdSpecial'])">🗑 Clear</button>
+                </div>
               </div>
               <div class="tool-output empty" id="tdOutput">Generated test data will appear here.</div>
             </div>
@@ -2804,7 +2923,11 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
             <div>
               <div class="tool-output-header">
                 <span class="tool-output-label">📋 Diff Analysis</span>
-                <button class="tool-copy-btn" onclick="copyToolOutput('diffOutput')">📋 Copy</button>
+                <div style="display:flex;gap:6px;">
+                  <button class="tool-expand-btn" onclick="nmToolExpandOpen('diffOutput','↔ Diff Analysis')">⛶ Expand</button>
+                  <button class="tool-copy-btn" onclick="copyToolOutput('diffOutput')">📋 Copy</button>
+                  <button class="tool-clear-btn" onclick="nmToolClear('diffOutput','Diff analysis will appear here.',['diffBefore','diffAfter'])">🗑 Clear</button>
+                </div>
               </div>
               <div class="tool-output empty" id="diffOutput">Diff analysis will appear here.</div>
             </div>
@@ -2851,7 +2974,11 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
             <div>
               <div class="tool-output-header">
                 <span class="tool-output-label">📋 Impact Analysis</span>
-                <button class="tool-copy-btn" onclick="copyToolOutput('impactOutput')">📋 Copy</button>
+                <div style="display:flex;gap:6px;">
+                  <button class="tool-expand-btn" onclick="nmToolExpandOpen('impactOutput','💥 Impact Analysis')">⛶ Expand</button>
+                  <button class="tool-copy-btn" onclick="copyToolOutput('impactOutput')">📋 Copy</button>
+                  <button class="tool-clear-btn" onclick="nmToolClear('impactOutput','Impact analysis will appear here.',['impactName','impactContext'])">🗑 Clear</button>
+                </div>
               </div>
               <div class="tool-output empty" id="impactOutput">Impact analysis will appear here.</div>
             </div>
@@ -2919,7 +3046,11 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
             <div>
               <div class="tool-output-header">
                 <span class="tool-output-label">📋 FNDLOAD Script</span>
-                <button class="tool-copy-btn" onclick="copyToolOutput('ldtOutput')">📋 Copy</button>
+                <div style="display:flex;gap:6px;">
+                  <button class="tool-expand-btn" onclick="nmToolExpandOpen('ldtOutput','📄 FNDLOAD / LDT Script')">⛶ Expand</button>
+                  <button class="tool-copy-btn" onclick="copyToolOutput('ldtOutput')">📋 Copy</button>
+                  <button class="tool-clear-btn" onclick="nmToolClear('ldtOutput','Your FNDLOAD / LDT script will appear here.',['ldtDetails','ldtContext'])">🗑 Clear</button>
+                </div>
               </div>
               <div class="tool-output empty" id="ldtOutput">Your FNDLOAD / LDT script will appear here.</div>
             </div>
@@ -3519,6 +3650,69 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
 
     </div>
   </div><!-- tab-va -->
+
+  <!-- ═══════════ 🔬 CODE LAB TAB ═══════════ -->
+  <div class="tab-content" id="tab-codelab">
+    <div class="cl-wrap">
+      <div class="cl-top">
+        <div class="cl-header-row">
+          <div class="cl-title">🔬 PL/SQL Code Lab</div>
+          <div class="cl-subtitle">Upload or paste any PL/SQL script — AI auto-detects modules, finds all issues, fixes and formats the code</div>
+        </div>
+        <div class="cl-mode-row">
+          <button class="cl-mode-btn active" id="clModeUpload" onclick="clSetMode('upload')">📁 Upload File</button>
+          <button class="cl-mode-btn" id="clModePaste" onclick="clSetMode('paste')">📋 Paste Code</button>
+        </div>
+        <div id="clUploadSection">
+          <div class="cl-dropzone" id="clDropZone" onclick="document.getElementById('clFileInput').click()">
+            <div class="cl-drop-icon">📂</div>
+            <div class="cl-drop-title">Drop your PL/SQL file here or click to browse</div>
+            <div class="cl-drop-sub">Supports .sql &nbsp;·&nbsp; .pls &nbsp;·&nbsp; .pkb &nbsp;·&nbsp; .pks &nbsp;·&nbsp; .prc &nbsp;·&nbsp; .fnc &nbsp;·&nbsp; .trg &nbsp;·&nbsp; .txt</div>
+          </div>
+          <input type="file" id="clFileInput" accept=".sql,.pls,.pkb,.pks,.prc,.fnc,.trg,.txt" style="display:none" onchange="clHandleFile(this)">
+          <div class="cl-file-info" id="clFileInfo" style="display:none;">
+            <span class="cl-file-icon">📄</span>
+            <span id="clFileName"></span>
+            <span id="clFileSize" class="cl-file-size"></span>
+            <button class="cl-file-remove" onclick="clRemoveFile()">✕ Remove</button>
+          </div>
+        </div>
+        <div id="clPasteSection" style="display:none;">
+          <textarea class="cl-code-area" id="clCodeInput" placeholder="Paste your PL/SQL package, procedure, function, trigger, or anonymous block here...&#10;&#10;The AI will auto-detect which Oracle modules (AP, GL, AR, PO, INV, HR, etc.) are involved."></textarea>
+        </div>
+        <div class="cl-action-row">
+          <label class="cl-check"><input type="checkbox" id="clOptFix" checked> Fix all issues</label>
+          <label class="cl-check"><input type="checkbox" id="clOptFormat" checked> Format & indent after fix</label>
+          <button class="cl-analyse-btn" id="clAnalyseBtn" onclick="clAnalyse()">🔍 Analyse Code</button>
+          <button class="cl-clear-btn" onclick="clReset()" title="Clear everything">🗑️ Clear</button>
+        </div>
+      </div>
+      <div class="cl-results" id="clResults" style="display:none;">
+        <div class="cl-loading" id="clLoading" style="display:none;">
+          <div class="cl-spin">⟳</div>
+          <div class="cl-loading-text" id="clLoadingText">Scanning compilation issues…</div>
+        </div>
+        <div class="cl-summary-row" id="clSummaryRow" style="display:none;">
+          <div class="cl-summary-label">Analysis complete:</div>
+          <span class="cl-badge cl-badge-critical" id="clBadgeCritical" style="display:none;"></span>
+          <span class="cl-badge cl-badge-high" id="clBadgeHigh" style="display:none;"></span>
+          <span class="cl-badge cl-badge-perf" id="clBadgePerf" style="display:none;"></span>
+          <span class="cl-badge cl-badge-standards" id="clBadgeStd" style="display:none;"></span>
+          <span class="cl-badge cl-badge-suggest" id="clBadgeSuggest" style="display:none;"></span>
+          <span class="cl-badge cl-badge-modules" id="clBadgeModules" style="display:none;"></span>
+        </div>
+        <div class="cl-findings" id="clFindings"></div>
+        <div id="clFixedSection" style="display:none;">
+          <div class="cl-fixed-header">
+            <span class="cl-fixed-title">✅ Fixed & Formatted Code</span>
+            <button class="cl-action-btn" onclick="clCopyFixed()">📋 Copy Code</button>
+            <button class="cl-action-btn" onclick="clDownloadFixed()">⬇️ Download .sql</button>
+          </div>
+          <pre class="cl-code-out" id="clFixedCode"></pre>
+        </div>
+      </div>
+    </div>
+  </div><!-- tab-codelab -->
 
 </div><!-- .app -->
 
@@ -4259,6 +4453,529 @@ function nmClearVaDocResult(){
 
   if(document.readyState==='complete'||document.readyState==='interactive'){setTimeout(init,900);}
   else{document.addEventListener('DOMContentLoaded',function(){setTimeout(init,900);});}
+})();
+</script>
+
+<!-- Full-screen response reader overlay -->
+<div class="nm-reader-overlay" id="nmReaderOverlay" onclick="if(event.target===this)nmCloseReader()">
+  <div class="nm-reader-card">
+    <button class="nm-reader-close" onclick="nmCloseReader()">✕ Close</button>
+    <div class="nm-reader-body" id="nmReaderBody"></div>
+  </div>
+</div>
+
+<script>
+function nmInjectExpandBtns(){
+  document.querySelectorAll('.msg.msg-assistant .msg-inner').forEach(function(inner){
+    if(inner.querySelector('.msg-expand-btn')) return;
+    var btn=document.createElement('button');
+    btn.className='msg-expand-btn';
+    btn.title='Expand to full screen';
+    btn.textContent='⛶ Expand';
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var bubble=inner.querySelector('.bubble');
+      nmOpenReader(bubble ? bubble.innerHTML : inner.innerHTML);
+    });
+    inner.appendChild(btn);
+  });
+}
+function nmOpenReader(html){
+  document.getElementById('nmReaderBody').innerHTML=html;
+  var o=document.getElementById('nmReaderOverlay');
+  o.classList.add('open');
+  o.scrollTop=0;
+  document.body.style.overflow='hidden';
+}
+function nmCloseReader(){
+  document.getElementById('nmReaderOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')nmCloseReader();});
+(function(){
+  function init(){
+    var cm=document.getElementById('chatMessages');
+    if(!cm){setTimeout(init,600);return;}
+    nmInjectExpandBtns();
+    new MutationObserver(function(){nmInjectExpandBtns();}).observe(cm,{childList:true,subtree:true});
+  }
+  if(document.readyState==='complete'||document.readyState==='interactive'){setTimeout(init,800);}
+  else{document.addEventListener('DOMContentLoaded',function(){setTimeout(init,800);});}
+})();
+</script>
+
+<!-- NM Patch: Gemini 2.5 Flash/Flash-Lite models + default -->
+<script>
+(function(){
+  function patchModels(){
+    if(typeof MODELS !== 'undefined'){
+      if(!MODELS['gemini-2.5-flash']){
+        MODELS['gemini-2.5-flash']={
+          name:'Gemini 2.5 Flash',
+          provider:'Google',
+          providerKey:'google',
+          inputCost:0.30,
+          outputCost:2.50
+        };
+      }
+      if(!MODELS['gemini-2.5-flash-lite']){
+        MODELS['gemini-2.5-flash-lite']={
+          name:'Gemini 2.5 Flash-Lite',
+          provider:'Google',
+          providerKey:'google',
+          inputCost:0.10,
+          outputCost:0.40
+        };
+      }
+      var saved = localStorage.getItem('nm_default_model');
+      if(!saved){
+        if(typeof changeModel === 'function') changeModel('gemini-2.5-flash');
+        var sel = document.getElementById('modelSel');
+        if(sel) sel.value = 'gemini-2.5-flash';
+      }
+    } else {
+      setTimeout(patchModels, 200);
+    }
+  }
+  if(document.readyState==='complete'||document.readyState==='interactive'){setTimeout(patchModels,1000);}
+  else{document.addEventListener('DOMContentLoaded',function(){setTimeout(patchModels,1000);});}
+})();
+</script>
+
+<!-- NM Smart Fallback: Free-first auto-recovery with switch banner -->
+<style>
+@keyframes nmBannerIn{from{opacity:0;transform:translateX(-50%) translateY(-12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+#nm-switch-banner{
+  display:none;position:fixed;top:68px;left:50%;transform:translateX(-50%);
+  z-index:99999;background:linear-gradient(135deg,#0f2922,#0a3d1f);
+  border:1px solid #22c55e;border-radius:10px;padding:10px 18px;
+  color:#86efac;font-size:13px;font-weight:500;
+  box-shadow:0 6px 24px rgba(0,0,0,0.5);
+  align-items:center;gap:10px;max-width:620px;width:90%;
+  animation:nmBannerIn 0.3s ease;
+}
+#nm-switch-banner.open{display:flex;}
+#nm-switch-banner .nm-sb-icon{font-size:18px;flex-shrink:0;}
+#nm-switch-banner .nm-sb-close{margin-left:auto;cursor:pointer;opacity:0.6;font-size:16px;flex-shrink:0;}
+#nm-switch-banner .nm-sb-close:hover{opacity:1;}
+</style>
+<script>
+(function(){
+  var CHAIN=[
+    {id:'llama-3.1-8b-instant',     label:'Llama 3.1 8B',       free:true},
+    {id:'llama-3.3-70b-versatile',  label:'Llama 3.3 70B',      free:true},
+    {id:'gemini-2.5-flash-lite',    label:'Gemini 2.5 Flash-Lite',free:true},
+    {id:'gemini-2.5-flash',         label:'Gemini 2.5 Flash',   free:true},
+    {id:'gemini-2.5-pro',           label:'Gemini 2.5 Pro',     free:false},
+    {id:'deepseek-chat',            label:'DeepSeek V3.2',      free:false},
+    {id:'claude-haiku-4-5-20251001',label:'Claude Haiku 4.5',   free:false},
+    {id:'claude-sonnet-4-6',        label:'Claude Sonnet 4.6',  free:false},
+    {id:'claude-opus-4-6',          label:'Claude Opus 4.6',    free:false}
+  ];
+  var _retrying=false,_tried=[];
+  function ensureBanner(){
+    if(document.getElementById('nm-switch-banner')) return;
+    var d=document.createElement('div');
+    d.id='nm-switch-banner';
+    d.innerHTML='<span class="nm-sb-icon">⚡</span>'
+      +'<span id="nm-sb-text"></span>'
+      +'<span class="nm-sb-close" onclick="this.parentElement.classList.remove(\'open\')">✕</span>';
+    document.body.appendChild(d);
+  }
+  function showBanner(msg){
+    ensureBanner();
+    var b=document.getElementById('nm-switch-banner');
+    var t=document.getElementById('nm-sb-text');
+    if(!b||!t) return;
+    t.innerHTML=msg;
+    b.classList.add('open');
+    clearTimeout(b._t);
+    b._t=setTimeout(function(){b.classList.remove('open');},7000);
+  }
+  function currentModelId(){return(document.getElementById('modelSel')||{}).value||'';}
+  function modelLabel(id){var m=CHAIN.filter(function(x){return x.id===id;})[0];return m?m.label:id;}
+  function getNext(failedId){return CHAIN.filter(function(m){return m.id!==failedId&&_tried.indexOf(m.id)===-1;})[0]||null;}
+  function isModelError(txt){
+    var t=(txt||'').toLowerCase();
+    return t.indexOf('quota exceeded')>-1||t.indexOf('limit: 0')>-1||
+           t.indexOf('model not found')>-1||t.indexOf('deprecated')>-1||
+           t.indexOf('does not exist')>-1||t.indexOf('model_not_found')>-1||
+           t.indexOf('exceeded your current quota')>-1||
+           t.indexOf('not available')>-1||t.indexOf('shut down')>-1;
+  }
+  function lastUserMessage(){var msgs=document.querySelectorAll('#chatMessages .msg.msg-user .bubble');return msgs.length?msgs[msgs.length-1].textContent.trim():null;}
+  function removeLastError(){var errs=document.querySelectorAll('#chatMessages .msg.msg-error');if(errs.length)errs[errs.length-1].remove();}
+  function retry(failedId){
+    if(_retrying) return;
+    _retrying=true;
+    _tried.push(failedId);
+    var next=getNext(failedId);
+    if(!next){_retrying=false;_tried=[];showBanner('⚠️ All available models failed. Please check your API keys in Settings.');return;}
+    var lastMsg=lastUserMessage();
+    if(!lastMsg){_retrying=false;return;}
+    var fromLabel=modelLabel(failedId);
+    var freeTag=next.free?' <span style="color:#4ade80;font-weight:700;">🆓 Free</span>':'';
+    showBanner('<b style="color:#fca5a5">'+fromLabel+'</b> unavailable → switching to <b style="color:#86efac">'+next.label+'</b>'+freeTag+' &nbsp;·&nbsp; Retrying your question automatically…');
+    removeLastError();
+    if(typeof changeModel==='function') changeModel(next.id);
+    var sel=document.getElementById('modelSel');
+    if(sel) sel.value=next.id;
+    setTimeout(function(){
+      var inp=document.getElementById('chatInput');
+      if(inp&&typeof sendMessage==='function'){
+        inp.value=lastMsg;
+        inp.dispatchEvent(new Event('input'));
+        setTimeout(function(){sendMessage();_retrying=false;},300);
+      }else{_retrying=false;}
+    },450);
+  }
+  function init(){
+    ensureBanner();
+    var cm=document.getElementById('chatMessages');
+    if(!cm) return;
+    new MutationObserver(function(muts){
+      muts.forEach(function(m){
+        m.addedNodes.forEach(function(n){
+          if(n.nodeType!==1) return;
+          if(n.classList.contains('msg-assistant')) _tried=[];
+          if(n.classList.contains('msg-error')){
+            var bub=n.querySelector('.err-bub');
+            if(bub&&isModelError(bub.textContent)){
+              var mid=currentModelId();
+              setTimeout(function(){retry(mid);},400);
+            }
+          }
+        });
+      });
+    }).observe(cm,{childList:true});
+  }
+  if(document.readyState==='complete'||document.readyState==='interactive'){setTimeout(init,1300);}
+  else{document.addEventListener('DOMContentLoaded',function(){setTimeout(init,1300);});}
+})();
+</script>
+
+<!-- ═══════════ 🔬 CODE LAB CSS + JS ═══════════ -->
+<style>
+.cl-wrap{display:flex;flex-direction:column;height:100%;overflow:hidden;}
+.cl-top{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:12px;flex-shrink:0;}
+.cl-header-row{display:flex;flex-direction:column;gap:2px;}
+.cl-title{font-size:16px;font-weight:700;color:var(--text);}
+.cl-subtitle{font-size:12px;color:var(--text-muted);}
+.cl-mode-row{display:flex;gap:8px;}
+.cl-mode-btn{padding:6px 18px;border-radius:6px;font-size:13px;cursor:pointer;background:var(--surface);border:1px solid var(--border);color:var(--text-muted);transition:all 0.2s;}
+.cl-mode-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.cl-dropzone{border:2px dashed var(--border);border-radius:12px;padding:28px 20px;text-align:center;cursor:pointer;transition:all 0.2s;}
+.cl-dropzone:hover,.cl-dropzone.drag-over{border-color:var(--accent);background:rgba(99,102,241,0.04);}
+.cl-drop-icon{font-size:28px;margin-bottom:6px;}
+.cl-drop-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.cl-drop-sub{font-size:12px;color:var(--text-muted);}
+.cl-file-info{display:flex;align-items:center;gap:8px;padding:8px 14px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.3);border-radius:8px;font-size:13px;margin-top:8px;}
+.cl-file-icon{font-size:16px;}
+.cl-file-size{color:var(--text-muted);font-size:11px;margin-left:4px;}
+.cl-file-remove{margin-left:auto;background:none;border:none;cursor:pointer;color:#f87171;font-size:12px;}
+.cl-code-area{font-family:'Courier New',monospace;font-size:12.5px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;color:var(--text);resize:vertical;min-height:180px;width:100%;box-sizing:border-box;line-height:1.5;}
+.cl-code-area:focus{outline:none;border-color:var(--accent);}
+.cl-action-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.cl-check{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-muted);cursor:pointer;}
+.cl-check input{accent-color:var(--accent);}
+.cl-analyse-btn{padding:9px 26px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;margin-left:auto;transition:opacity 0.2s;}
+.cl-analyse-btn:disabled{opacity:0.45;cursor:not-allowed;}
+.cl-clear-btn{padding:9px 14px;background:transparent;border:1px solid var(--border);border-radius:8px;font-size:13px;cursor:pointer;color:var(--text-muted);}
+.cl-clear-btn:hover{border-color:#f87171;color:#f87171;}
+.cl-results{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px;}
+@keyframes clSpin{to{transform:rotate(360deg);}}
+.cl-loading{display:flex;align-items:center;gap:12px;padding:20px;color:var(--text-muted);}
+.cl-spin{font-size:22px;animation:clSpin 1s linear infinite;display:inline-block;}
+.cl-loading-text{font-size:14px;}
+.cl-summary-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.cl-summary-label{font-size:12px;color:var(--text-muted);margin-right:4px;}
+.cl-badge{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;}
+.cl-badge-critical{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.35);}
+.cl-badge-high{background:rgba(249,115,22,0.15);color:#fb923c;border:1px solid rgba(249,115,22,0.35);}
+.cl-badge-perf{background:rgba(234,179,8,0.15);color:#fbbf24;border:1px solid rgba(234,179,8,0.35);}
+.cl-badge-standards{background:rgba(99,102,241,0.15);color:#a5b4fc;border:1px solid rgba(99,102,241,0.35);}
+.cl-badge-suggest{background:rgba(34,197,94,0.15);color:#4ade80;border:1px solid rgba(34,197,94,0.35);}
+.cl-badge-modules{background:rgba(6,182,212,0.15);color:#67e8f9;border:1px solid rgba(6,182,212,0.35);}
+.cl-findings{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;font-size:13px;line-height:1.7;color:var(--text);white-space:pre-wrap;font-family:inherit;}
+.cl-fixed-header{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.cl-fixed-title{font-size:14px;font-weight:700;color:var(--text);}
+.cl-action-btn{padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);transition:all 0.2s;}
+.cl-action-btn:hover{border-color:var(--accent);color:var(--accent);}
+.cl-code-out{background:#0d1117;border:1px solid var(--border);border-radius:10px;padding:16px 20px;font-family:'Courier New',monospace;font-size:12.5px;white-space:pre;overflow:auto;color:#e6edf3;max-height:520px;line-height:1.5;tab-size:2;}
+</style>
+<script>
+(function(){
+  var clMode='upload',clFileContent='',clFixedText='',clLoadingTimer=null;
+  var clLoadingMessages=['Reading your code…','Scanning for compilation issues…','Checking table & column references…','Analysing join conditions…','Reviewing logical flow…','Checking performance patterns…','Reviewing exception handling…','Checking Oracle EBS rules…','Validating security…','Generating fixed & formatted code…'];
+  window.clSetMode=function(m){clMode=m;document.getElementById('clUploadSection').style.display=m==='upload'?'':'none';document.getElementById('clPasteSection').style.display=m==='paste'?'':'none';document.getElementById('clModeUpload').classList.toggle('active',m==='upload');document.getElementById('clModePaste').classList.toggle('active',m==='paste');};
+  window.clHandleFile=function(inp){var f=inp.files[0];if(!f)return;document.getElementById('clFileName').textContent=f.name;document.getElementById('clFileSize').textContent='('+Math.round(f.size/1024)+' KB)';document.getElementById('clFileInfo').style.display='flex';document.getElementById('clDropZone').style.display='none';var r=new FileReader();r.onload=function(e){clFileContent=e.target.result;};r.readAsText(f);};
+  window.clRemoveFile=function(){clFileContent='';document.getElementById('clFileInfo').style.display='none';document.getElementById('clDropZone').style.display='';document.getElementById('clFileInput').value='';};
+  function initDrop(){var dz=document.getElementById('clDropZone');if(!dz)return;dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('drag-over');});dz.addEventListener('dragleave',function(){dz.classList.remove('drag-over');});dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('drag-over');var f=e.dataTransfer.files[0];if(!f)return;var inp=document.getElementById('clFileInput');var dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;clHandleFile(inp);});}
+  window.clReset=function(){clRemoveFile();document.getElementById('clCodeInput').value='';document.getElementById('clResults').style.display='none';clFixedText='';};
+  function startLoading(){document.getElementById('clResults').style.display='flex';document.getElementById('clLoading').style.display='flex';document.getElementById('clSummaryRow').style.display='none';document.getElementById('clFindings').textContent='';document.getElementById('clFixedSection').style.display='none';var i=0,lt=document.getElementById('clLoadingText');lt.textContent=clLoadingMessages[0];clLoadingTimer=setInterval(function(){i=(i+1)%clLoadingMessages.length;lt.textContent=clLoadingMessages[i];},3000);document.getElementById('clAnalyseBtn').disabled=true;}
+  function stopLoading(){clearInterval(clLoadingTimer);document.getElementById('clLoading').style.display='none';document.getElementById('clAnalyseBtn').disabled=false;}
+  function getKey(pk){var map={anthropic:'apiKeyInput',google:'googleKeyInput',groq:'groqKeyInput',deepseek:'deepseekKeyInput'};var el=document.getElementById(map[pk]||'apiKeyInput');return el?el.value.trim():'';}
+  async function clCallAI(code){
+    var modelId=(document.getElementById('modelSel')||{}).value||'claude-sonnet-4-6';
+    var model=(typeof MODELS!=='undefined'&&MODELS[modelId])?MODELS[modelId]:{providerKey:'anthropic'};
+    var pk=model.providerKey||'anthropic';
+    var key=getKey(pk);
+    if(!key)throw new Error('No API key found for this provider. Please add it in Settings.');
+    var fix=document.getElementById('clOptFix').checked;
+    var fmt=document.getElementById('clOptFormat').checked;
+    var prompt='You are an expert Oracle PL/SQL code analyst with deep knowledge of Oracle EBS R12, R12.2, and Oracle Cloud ERP.\n\nAUTO-DETECT which Oracle modules are used (AP_, AR_, GL_, PO_, INV_, FA_, HR_, PAY_, PA_, OM_, ONT_, WSH_, IBY_, XLA_, FND_, MO_, etc.) from the code. Do NOT ask the user to specify modules.\n\nANALYSE the code for ALL of the following:\n1. 🔴 COMPILATION — syntax errors, missing semicolons, undeclared variables, type mismatches, wrong END labels, missing package body, invalid signatures, wrong parameter modes\n2. 🟠 TABLE & COLUMN MISMATCHES — wrong table/view names, non-existent columns, ambiguous references, wrong schema prefix\n3. 🟠 JOIN ISSUES — Cartesian products, wrong join type, unused joined tables, redundant joins\n4. 🟠 LOGICAL ISSUES — impossible conditions, wrong AND/OR logic, CASE missing ELSE, wrong date logic, division by zero, NULL propagation\n5. 🟡 PERFORMANCE — full table scans, SELECT *, implicit type conversions, COMMIT in loops, correlated subqueries, missing BULK COLLECT/FORALL, missing index hints\n6. 🔵 COMMENTS — missing header block, undocumented parameters, missing inline comments, misleading comments\n7. 🔵 INDENTATION & FORMATTING — inconsistent indentation, mixed tabs/spaces, lowercase keywords, unaligned BEGIN/END, lines over 120 chars\n8. 🟠 ORACLE EBS RULES — missing MO_GLOBAL.init, missing FND_GLOBAL.apps_initialize, missing WHO columns, hardcoded ORG_ID, direct table insert bypassing APIs, missing fnd_file.put_line\n9. 🟠 EXCEPTION HANDLING — no EXCEPTION block, WHEN OTHERS without logging, silent NULL, missing RAISE\n10. 🔴 SECURITY — dynamic SQL injection risk, EXECUTE IMMEDIATE with user input, hardcoded credentials\n\nRESPOND IN THIS STRUCTURE:\n## 📊 Analysis Summary\n🔴 Critical: X  |  🟠 High: X  |  🟡 Performance: X  |  🔵 Standards: X  |  🟢 Suggestions: X\n\n## 🏷️ Detected Oracle Modules\n[modules found]\n\n## 🔍 Findings\n[grouped by severity, each with Problem and Fix]\n\n'+(fix?'## ✅ Fixed'+(fmt?' & Formatted':'')+' Code\n[COMPLETE corrected'+(fmt?', formatted (3-space indent, UPPERCASE keywords, header comment block, aligned BEGIN/END)':'')+' code in ```sql block]':'')
+      +'\n\nCODE TO ANALYSE:\n```sql\n'+code+'\n```';
+    var resp;
+    if(pk==='anthropic'){resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:modelId,max_tokens:8000,messages:[{role:'user',content:prompt}]})});}
+    else if(pk==='google'){resp=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+modelId+':generateContent?key='+key,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:8000}})});}
+    else{var ep=pk==='groq'?'https://api.groq.com/openai/v1/chat/completions':'https://api.deepseek.com/chat/completions';resp=await fetch(ep,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({model:modelId,max_tokens:8000,messages:[{role:'user',content:prompt}]})});}
+    if(!resp.ok){var err=await resp.json().catch(function(){return{};});throw new Error((err.error&&err.error.message)||('API error '+resp.status));}
+    var data=await resp.json();
+    if(pk==='anthropic')return data.content[0].text;
+    if(pk==='google')return data.candidates[0].content.parts[0].text;
+    return data.choices[0].message.content;
+  }
+  function renderResult(text){
+    var badgeDefs=[{id:'clBadgeCritical',rx:/🔴\s*Critical[:\s]+(\d+)/i,label:'🔴 Critical'},{id:'clBadgeHigh',rx:/🟠\s*High[:\s]+(\d+)/i,label:'🟠 High'},{id:'clBadgePerf',rx:/🟡\s*Performance[:\s]+(\d+)/i,label:'🟡 Performance'},{id:'clBadgeStd',rx:/🔵\s*Standards?[:\s]+(\d+)/i,label:'🔵 Standards'},{id:'clBadgeSuggest',rx:/🟢\s*Suggestions?[:\s]+(\d+)/i,label:'🟢 Suggestions'}];
+    document.getElementById('clSummaryRow').style.display='flex';
+    badgeDefs.forEach(function(b){var el=document.getElementById(b.id);var m=text.match(b.rx);if(m&&parseInt(m[1])>0){el.textContent=b.label+': '+m[1];el.style.display='';}else{el.style.display='none';}});
+    var modMatch=text.match(/##\s*🏷.*?Detected.*?\n([\s\S]*?)(?=\n##|\n\*\*|$)/i);
+    var modBadge=document.getElementById('clBadgeModules');
+    if(modMatch&&modMatch[1].trim()&&modMatch[1].trim().length>2){modBadge.textContent='🏷️ '+modMatch[1].trim().substring(0,60);modBadge.style.display='';}else{modBadge.style.display='none';}
+    var fixedSplit=text.split(/##\s*✅\s*Fixed/i);
+    document.getElementById('clFindings').textContent=fixedSplit[0].trim();
+    if(fixedSplit.length>1){var cb=fixedSplit[1].match(/```(?:sql|plsql)?\n?([\s\S]*?)```/i);clFixedText=cb?cb[1].trim():fixedSplit[1].replace(/```(?:sql|plsql)?/gi,'').trim();document.getElementById('clFixedCode').textContent=clFixedText;document.getElementById('clFixedSection').style.display='';}
+    else{document.getElementById('clFixedSection').style.display='none';clFixedText='';}
+  }
+  window.clAnalyse=async function(){
+    var code=clMode==='upload'?clFileContent:(document.getElementById('clCodeInput').value||'').trim();
+    if(!code){alert('Please upload a file or paste your PL/SQL code first.');return;}
+    startLoading();
+    try{var result=await clCallAI(code);stopLoading();renderResult(result);}
+    catch(e){stopLoading();document.getElementById('clFindings').textContent='⚠️ Error: '+e.message;document.getElementById('clResults').style.display='flex';document.getElementById('clSummaryRow').style.display='none';document.getElementById('clFixedSection').style.display='none';}
+  };
+  window.clCopyFixed=function(){if(!clFixedText)return;navigator.clipboard.writeText(clFixedText).then(function(){var btn=document.querySelector('#clFixedSection .cl-action-btn');var orig=btn.textContent;btn.textContent='✅ Copied!';setTimeout(function(){btn.textContent=orig;},2000);});};
+  window.clDownloadFixed=function(){if(!clFixedText)return;var blob=new Blob([clFixedText],{type:'text/plain'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='fixed_plsql_'+(new Date().toISOString().slice(0,10))+'.sql';a.click();};
+  function init(){var dz=document.getElementById('clDropZone');if(!dz)return;dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('drag-over');});dz.addEventListener('dragleave',function(){dz.classList.remove('drag-over');});dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('drag-over');var f=e.dataTransfer.files[0];if(!f)return;var inp=document.getElementById('clFileInput');var dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;clHandleFile(inp);});}
+  if(document.readyState==='complete'||document.readyState==='interactive'){setTimeout(init,1500);}
+  else{document.addEventListener('DOMContentLoaded',function(){setTimeout(init,1500);});}
+})();
+</script>
+
+<!-- ═══ Code Lab: hidden for Cloud versions ═══ -->
+<style>
+body:has(.ver-btn-erp.active) .nav-tab[data-tab="codelab"],
+body:has(.ver-btn-hcm.active) .nav-tab[data-tab="codelab"],
+body:has(.ver-btn-scm.active) .nav-tab[data-tab="codelab"],
+body:has(.ver-btn-epm.active) .nav-tab[data-tab="codelab"]{
+  display:none;
+}
+</style>
+<script>
+(function(){
+  var CLOUD_BTNS=['verBtn_erp','verBtn_hcm','verBtn_scm','verBtn_epm'];
+  function isCloudActive(){return CLOUD_BTNS.some(function(id){var el=document.getElementById(id);return el&&el.classList.contains('active');});}
+  function checkAndRedirect(){
+    if(!isCloudActive()) return;
+    var active=document.querySelector('.nav-tab.active');
+    if(active&&active.getAttribute('data-tab')==='codelab'){
+      var chatTab=document.querySelector('.nav-tab[data-tab="chat"]');
+      if(chatTab&&typeof switchTab==='function'){
+        switchTab('chat',chatTab);
+        var b=document.getElementById('nm-switch-banner');
+        var t=document.getElementById('nm-sb-text');
+        if(b&&t){t.innerHTML='🔬 <b>Code Lab</b> is for Oracle EBS R12 only — PL/SQL is not used in Oracle Cloud. Switched to Chat.';b.classList.add('open');clearTimeout(b._t);b._t=setTimeout(function(){b.classList.remove('open');},6000);}
+      }
+    }
+  }
+  function init(){
+    var verBar=document.querySelector('.ver-bar');
+    if(!verBar) return;
+    new MutationObserver(function(){checkAndRedirect();}).observe(verBar,{attributes:true,subtree:true,attributeFilter:['class']});
+  }
+  if(document.readyState==='complete'||document.readyState==='interactive'){setTimeout(init,1600);}
+  else{document.addEventListener('DOMContentLoaded',function(){setTimeout(init,1600);});}
+})();
+</script>
+
+<!-- ═══ Share override — rich content for all platforms ═══ -->
+<script>
+(function(){
+  var GITHUB='https://github.com/narenmeka/nm-oracle-ai-hub';
+
+  /* ── WhatsApp / Telegram / Facebook / Copy ── casual & punchy ── */
+  var MSG_CASUAL=[
+    '🔥 This changed how I work with Oracle forever.',
+    '',
+    '𝗡𝗠 · 𝗢𝗿𝗮𝗰𝗹𝗲 𝗔𝗜 𝗛𝘂𝗯 — a free AI workbench built specifically for Oracle EBS & Cloud professionals.',
+    'Zero installs. Zero subscriptions. One HTML file. Open in any browser.',
+    '',
+    '⚡ What it does:',
+    '  💬 Chat with Claude, Gemini & Llama on ANY Oracle topic',
+    '  🎓 Deep EBS Academy — flows, setups, architecture explained instantly',
+    '  🏗️ Build Studio — generate PL/SQL, SQL, specs & test scripts in seconds',
+    '  🔬 Code Lab — upload your package, AI fixes compilation + logic + performance issues',
+    '  🔍 Visual Analyser — paste Oracle screenshots, AI reads & explains them',
+    '  🎯 Advisor — validate your design before writing a single line of code',
+    '  🌐 Covers R12.1, R12.2, Cloud ERP, HCM, SCM & EPM',
+    '',
+    '🆓 100% FREE — just bring your own API key (Gemini gives 1000 free calls/day)',
+    '',
+    '📥 Download in 10 seconds — one file, works offline, no data ever leaves your machine:',
+    '👉 '+GITHUB,
+    '',
+    'Built by Narendra | Oracle EBS & Cloud Specialist'
+  ].join('\n');
+
+  /* ── LinkedIn ── professional & concise ── */
+  var MSG_LINKEDIN=[
+    'I built something I wish had existed 10 years ago.',
+    '',
+    '🏛️ NM · Oracle AI Hub — a free, offline-capable AI workbench built exclusively for Oracle EBS & Cloud professionals.',
+    '',
+    'No installation. No monthly fee. No data leaving your machine.',
+    '',
+    '→ Multi-model AI chat (Claude, Gemini, Llama) with deep Oracle context',
+    '→ PL/SQL & SQL generation using real Oracle best practices',
+    '→ Code Lab: upload your package — AI reviews & fixes it automatically',
+    '→ Visual Analyser: paste any Oracle screenshot for instant AI explanation',
+    '→ EBS Academy, Build Studio, Advisor & 9-model Smart Auto-Fallback',
+    '',
+    'Built for consultants, developers & architects on R12.1, R12.2, Cloud ERP, HCM, SCM & EPM.',
+    '',
+    '📥 Free download (single HTML file, works offline):',
+    GITHUB,
+    '',
+    '#Oracle #OracleEBS #OracleCloud #AI #PLSQL #ERP #OracleConsultant'
+  ].join('\n');
+
+  /* ── Twitter / X ── ultra-short & punchy ── */
+  var MSG_TWITTER=[
+    '🔥 Free Oracle AI tool — no install, no subscription.',
+    '',
+    'Chat with Claude/Gemini/Llama, generate PL/SQL, auto-fix your code, analyse Oracle screenshots.',
+    'One HTML file. Open in any browser. Works offline.',
+    '',
+    '📥 '+GITHUB,
+    '',
+    '#Oracle #OracleEBS #OracleCloud #AI #PLSQL'
+  ].join('\n');
+
+  /* ── Email ── concise, scannable, action-driven ── */
+  var EMAIL_SUBJ='🏛️ NM · Oracle AI Hub — Free AI tool for Oracle professionals';
+  var EMAIL_BODY=[
+    'Hi,',
+    '',
+    'If you work with Oracle EBS or Cloud ERP, this tool will save you hours every week.',
+    '',
+    '🏛️ NM · Oracle AI Hub — a free AI workbench for Oracle professionals.',
+    'No install. No subscription. One HTML file. Open in any browser.',
+    '',
+    'What it does:',
+    '  💬 AI Chat       — Ask Claude, Gemini or Llama anything about Oracle (EBS, R12, Cloud, HCM, SCM, EPM)',
+    '  🎓 EBS Academy   — Deep Oracle concepts, setups & architecture explained on demand',
+    '  🏗️ Build Studio  — Generate PL/SQL, SQL, design specs & test scripts in seconds',
+    '  🔬 Code Lab      — Upload your PL/SQL package; AI fixes errors, logic & formatting automatically',
+    '  🔍 Analyser      — Paste any Oracle screenshot; AI reads and explains it',
+    '  🎯 Advisor       — Validate your solution design before writing a line of code',
+    '',
+    '📥 Download free — 3 steps:',
+    '  1. Go to → '+GITHUB,
+    '  2. Download the .html file → open in Chrome or Edge',
+    '  3. Add your free Gemini API key → start asking Oracle questions',
+    '',
+    'No data leaves your machine. Works offline. 100% private.',
+    '',
+    '— Narendra | Oracle EBS & Cloud Specialist'
+  ].join('\n');
+
+  function closeDropdown(){var dd=document.getElementById('shareDropdown');if(dd){dd.style.display='none';setTimeout(function(){dd.style.removeProperty('display');},400);}}
+  function showToast(msg){var t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2500);}
+
+  window.shareVia=function(platform){
+    closeDropdown();
+    var enc=encodeURIComponent;
+    switch(platform){
+      case 'whatsapp': window.open('https://wa.me/?text='+enc(MSG_CASUAL),'_blank'); break;
+      case 'twitter': window.open('https://twitter.com/intent/tweet?text='+enc(MSG_TWITTER),'_blank'); break;
+      case 'linkedin': window.open('https://www.linkedin.com/sharing/share-offsite/?mini=true&title='+enc('NM · Oracle AI Hub — Free AI Workbench for Oracle Professionals')+'&summary='+enc(MSG_LINKEDIN),'_blank'); break;
+      case 'facebook': window.open('https://www.facebook.com/sharer/sharer.php?quote='+enc(MSG_CASUAL),'_blank'); break;
+      case 'telegram': window.open('https://t.me/share/url?url='+enc(GITHUB)+'&text='+enc(MSG_CASUAL),'_blank'); break;
+      case 'email': window.location.href='mailto:?subject='+enc(EMAIL_SUBJ)+'&body='+enc(EMAIL_BODY); break;
+      case 'copy':
+        navigator.clipboard.writeText(MSG_CASUAL).then(function(){showToast('✅ Share message copied!');}).catch(function(){var ta=document.createElement('textarea');ta.value=MSG_CASUAL;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('✅ Copied!');});
+        break;
+      case 'download':
+        var blob=new Blob([document.documentElement.outerHTML],{type:'text/html'});
+        var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='NM_Oracle_AI_Hub.html';a.click();
+        break;
+    }
+    return false;
+  };
+})();
+</script>
+
+<!-- ═══ Tool Output: Expand Modal ═══ -->
+<div class="tool-expand-modal" id="toolExpandModal">
+  <div class="tool-expand-inner">
+    <div class="tool-expand-hdr">
+      <span class="tool-expand-title" id="toolExpandTitle">📋 Output</span>
+      <div class="tool-expand-actions">
+        <button class="tool-copy-btn" onclick="nmToolExpandCopy()" style="font-size:12px;">📋 Copy</button>
+        <button class="tool-expand-close" onclick="nmToolExpandClose()" title="Close (Esc)">✕</button>
+      </div>
+    </div>
+    <div class="tool-expand-body" id="toolExpandBody"></div>
+  </div>
+</div>
+
+<!-- ═══ Tool Clear + Expand JS ═══ -->
+<script>
+(function(){
+  function openExpandModal(outputId, title){
+    var src=document.getElementById(outputId);
+    if(!src||src.classList.contains('empty')) return;
+    document.getElementById('toolExpandTitle').textContent=title||'📋 Output';
+    document.getElementById('toolExpandBody').textContent=src.textContent;
+    document.getElementById('toolExpandModal').classList.add('open');
+  }
+  function closeExpandModal(){
+    document.getElementById('toolExpandModal').classList.remove('open');
+  }
+  document.getElementById('toolExpandModal').addEventListener('click',function(e){
+    if(e.target===this) closeExpandModal();
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape') closeExpandModal();
+  });
+  window.nmToolExpandOpen=openExpandModal;
+  window.nmToolExpandClose=closeExpandModal;
+  window.nmToolExpandCopy=function(){
+    var text=document.getElementById('toolExpandBody').textContent;
+    if(!text) return;
+    navigator.clipboard.writeText(text).then(function(){
+      if(typeof showToast==='function') showToast('✅ Copied to clipboard!');
+    }).catch(function(){
+      var ta=document.createElement('textarea');
+      ta.value=text; document.body.appendChild(ta);
+      ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      if(typeof showToast==='function') showToast('✅ Copied!');
+    });
+  };
+  window.nmToolClear=function(outputId, defaultText, textIds){
+    var out=document.getElementById(outputId);
+    if(out){
+      out.textContent=defaultText||'';
+      out.classList.add('empty');
+    }
+    if(textIds){
+      textIds.forEach(function(id){
+        var el=document.getElementById(id);
+        if(el) el.value='';
+      });
+    }
+  };
 })();
 </script>
 
