@@ -17,7 +17,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NM · Oracle AI Hub</title>
+<title>Oracle AI Hub</title>
 <style>
 :root {
   --bg: #0d1117;
@@ -1692,7 +1692,7 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
       </svg>
     </div>
     <div>
-      <div class="hdr-title">NM · Oracle AI Hub</div>
+      <div class="hdr-title">Oracle AI Hub</div>
       <div class="hdr-sub" id="hdrSub">Your Oracle AI Hub · All Products</div>
     </div>
     <div class="hdr-spacer"></div>
@@ -2176,7 +2176,7 @@ body:has(.ver-btn-epm.active) .tools-subnav .ver-cloud-all{display:inline-flex;}
               <g style="transform-origin:40px 40px;animation:logo-spin 6s linear infinite reverse;"><circle cx="40" cy="12" r="3" fill="#a78bfa" opacity="0.8"/></g>
             </svg>
           </div>
-          <div class="welcome-brand">NM · Oracle AI Hub</div>
+          <div class="welcome-brand">Oracle AI Hub</div>
           <div class="welcome-tagline">Your Oracle AI Hub · Powered by Claude, Gemini, DeepSeek &amp; Llama</div>
           <div class="welcome-modules">
             <span class="wmod wmod-f">💰 Finance</span>
@@ -4317,7 +4317,7 @@ const _0x3c3bd0=_0x89a4;(function(_0x43ad50,_0x392890){const _0x43ee39=_0x89a4,_
         <circle cx="20" cy="3" r="2.2" fill="#E84B37"/>
       </svg>
       <div>
-        <div class="about-app-name">NM · Oracle AI Hub</div>
+        <div class="about-app-name">Oracle AI Hub</div>
         <div class="about-app-tagline">AI-powered assistant for Oracle EBS &amp; Fusion Cloud</div>
       </div>
     </div>
@@ -5123,7 +5123,7 @@ body:has(.ver-btn-epm.active) .nav-tab[data-tab="codelab"]{
   var MSG_CASUAL=[
     '🔥 This changed how I work with Oracle forever.',
     '',
-    '𝗡𝗠 · 𝗢𝗿𝗮𝗰𝗹𝗲 𝗔𝗜 𝗛𝘂𝗯 — a free AI workbench built specifically for Oracle EBS & Cloud professionals.',
+    '𝗢𝗿𝗮𝗰𝗹𝗲 𝗔𝗜 𝗛𝘂𝗯 — a free AI workbench built specifically for Oracle EBS & Cloud professionals.',
     'Zero installs. Zero subscriptions. One HTML file. Open in any browser.',
     '',
     '⚡ What it does:',
@@ -5147,7 +5147,7 @@ body:has(.ver-btn-epm.active) .nav-tab[data-tab="codelab"]{
   var MSG_LINKEDIN=[
     'I built something I wish had existed 10 years ago.',
     '',
-    '🏛️ NM · Oracle AI Hub — a free, offline-capable AI workbench built exclusively for Oracle EBS & Cloud professionals.',
+    '🏛️ Oracle AI Hub — a free, offline-capable AI workbench built exclusively for Oracle EBS & Cloud professionals.',
     '',
     'No installation. No monthly fee. No data leaving your machine.',
     '',
@@ -5178,13 +5178,13 @@ body:has(.ver-btn-epm.active) .nav-tab[data-tab="codelab"]{
   ].join('\n');
 
   /* ── Email ── concise, scannable, action-driven ── */
-  var EMAIL_SUBJ='🏛️ NM · Oracle AI Hub — Free AI tool for Oracle professionals';
+  var EMAIL_SUBJ='🏛️ Oracle AI Hub — Free AI tool for Oracle professionals';
   var EMAIL_BODY=[
     'Hi,',
     '',
     'If you work with Oracle EBS or Cloud ERP, this tool will save you hours every week.',
     '',
-    '🏛️ NM · Oracle AI Hub — a free AI workbench for Oracle professionals.',
+    '🏛️ Oracle AI Hub — a free AI workbench for Oracle professionals.',
     'No install. No subscription. One HTML file. Open in any browser.',
     '',
     'What it does:',
@@ -5227,7 +5227,7 @@ body:has(.ver-btn-epm.active) .nav-tab[data-tab="codelab"]{
       case 'twitter':
         window.open('https://twitter.com/intent/tweet?text='+enc(MSG_TWITTER),'_blank'); break;
       case 'linkedin':
-        window.open('https://www.linkedin.com/sharing/share-offsite/?mini=true&title='+enc('NM · Oracle AI Hub — Free AI Workbench for Oracle Professionals')+'&summary='+enc(MSG_LINKEDIN),'_blank'); break;
+        window.open('https://www.linkedin.com/sharing/share-offsite/?mini=true&title='+enc('Oracle AI Hub — Free AI Workbench for Oracle Professionals')+'&summary='+enc(MSG_LINKEDIN),'_blank'); break;
       case 'facebook':
         window.open('https://www.facebook.com/sharer/sharer.php?quote='+enc(MSG_CASUAL),'_blank'); break;
       case 'telegram':
@@ -5247,7 +5247,7 @@ body:has(.ver-btn-epm.active) .nav-tab[data-tab="codelab"]{
         var blob=new Blob([html],{type:'text/html'});
         var a=document.createElement('a');
         a.href=URL.createObjectURL(blob);
-        a.download='NM_Oracle_AI_Hub.html';
+        a.download='Oracle_AI_Hub.html';
         a.click(); break;
     }
     return false;
@@ -5322,6 +5322,81 @@ body:has(.ver-btn-epm.active) .nav-tab[data-tab="codelab"]{
       });
     }
   };
+})();
+</script>
+
+<!-- ═══ Hide provider setup panel when a key is already saved ═══ -->
+<script>
+(function(){
+  /* Check input fields (populated by obfuscated script on Settings open) */
+  function keyInInputs(){
+    return ['apiKeyInput','googleKeyInput','groqKeyInput','deepseekKeyInput'].some(function(id){
+      var el = document.getElementById(id);
+      return el && el.value && el.value.trim().length > 4;
+    });
+  }
+
+  /* Check localStorage directly — works even before inputs are populated.
+     We look for any stored value that looks like an API key. */
+  function keyInStorage(){
+    try {
+      for(var i = 0; i < localStorage.length; i++){
+        var k = localStorage.key(i);
+        var v = localStorage.getItem(k) || '';
+        /* Groq: gsk_  |  Google: AIza  |  Anthropic: sk-ant-  |  DeepSeek: sk- */
+        if(v.length > 10 && (
+          v.indexOf('gsk_')   === 0 ||
+          v.indexOf('AIza')   === 0 ||
+          v.indexOf('sk-ant-')=== 0 ||
+          (v.indexOf('sk-')   === 0 && v.length > 20)
+        )) return true;
+        /* Fallback: any localStorage key whose name contains "key" with a long value */
+        if(k && k.toLowerCase().indexOf('key') > -1 && v.length > 15) return true;
+      }
+    } catch(e){}
+    return false;
+  }
+
+  function hasAnyKey(){
+    return keyInStorage() || keyInInputs();
+  }
+
+  function applyVisibility(){
+    var panel = document.getElementById('setupNotice');
+    if(!panel) return;
+    if(hasAnyKey()){
+      panel.style.display = 'none';
+    } else {
+      panel.style.display = '';
+      var warn = document.getElementById('noKeyWarning');
+      if(warn) warn.style.display = '';
+    }
+  }
+
+  /* Run as early as possible — localStorage is synchronous so no delay needed */
+  function run(){
+    applyVisibility();
+    /* Also poll briefly in case obfuscated script writes to localStorage after us */
+    var attempts = 0;
+    var timer = setInterval(function(){
+      if(hasAnyKey()){ applyVisibility(); clearInterval(timer); return; }
+      if(++attempts >= 15) clearInterval(timer); /* stop after 3 s */
+    }, 200);
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+
+  /* Re-check after any Save button click */
+  document.addEventListener('click', function(e){
+    var btn = e.target;
+    if(btn && (btn.classList.contains('save-btn') || btn.id === 'saveKeyBtn')){
+      setTimeout(applyVisibility, 300);
+    }
+  }, true);
 })();
 </script>
 
